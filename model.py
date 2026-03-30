@@ -7,14 +7,12 @@ class MouseCommsNet(nn.Module):
     def __init__(self):
         super(MouseCommsNet, self).__init__()
         self.layer1 = nn.Sequential(
-            nn.Linear(40, 64),
-            nn.Softplus(),
-            nn.Linear(64, 128),
-            nn.Softplus(),
-            nn.Linear(128, 64),
-            nn.Softplus(),
-            nn.Linear(64, 32),
-            nn.Softplus(),
+            nn.Linear(80, 128),
+            nn.Sigmoid(),
+            nn.Linear(128, 256),
+            nn.ReLU(),
+            nn.Linear(256, 32),
+            nn.ReLU(),
             nn.Linear(32, 5),
             nn.Sigmoid()
         )

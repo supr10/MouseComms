@@ -3,6 +3,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 import torch.nn
 from torch.nn.modules import loss
+import tqdm
 
 import model
 from data_preprocessing import load_tensor_lib, merge_tensors
@@ -21,17 +22,16 @@ x4, y4 = load_tensor_lib("cir", 10, 4)
 X, Y = merge_tensors((x0, x1, x2, x3, x4), (y0, y1, y2, y3, y4))
 
 
-training_steps = 5000
+training_steps = 10000
 agent.train()
-for i in range(training_steps):
+for i in tqdm.tqdm(range(training_steps)):
     optimizer.zero_grad()
     output = agent(X)
     loss = criterion(output, Y)
     loss.backward()
     optimizer.step()
-    if i%100 == 0:
-        print(loss.item())
+print(loss.item())
 
-torch.save(agent.state_dict(), './model/agent.pth')
+torch.save(agent.state_dict(), './model/agent-v0.2.pth')
 
 
